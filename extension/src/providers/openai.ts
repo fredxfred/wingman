@@ -1,7 +1,7 @@
 import { WebviewView } from "vscode";
 import { PreparedCommand } from "../dispatcher";
 import { OpenAIClient, PartialResponse } from "./clients/openai";
-import { APIProvider } from "./common";
+import { APIProvider, ClaudeOpenAIMessage } from "./common";
 
 export class OpenAIProvider implements APIProvider {
   webviewView: WebviewView;
@@ -9,7 +9,7 @@ export class OpenAIProvider implements APIProvider {
   onProgressCallback: (text: string) => void;
   client: OpenAIClient;
   abortController: AbortController;
-  messages: any[] = [];
+  messages: Array<ClaudeOpenAIMessage>;
 
   constructor(viewProvider: WebviewView, command: PreparedCommand, onProgressCallback?: (text: string) => void) {
     this.webviewView = viewProvider;

@@ -83,7 +83,19 @@ export const createDefaultPresetsForAllModes = () => {
             model: null,
             stop: null,
           },
-        }
+        },
+        {
+          id: generateId(),
+          name: "Claude v3 Sonnet",
+          provider: "Anthropic",
+          format: "ClaudeV3",
+          tokenizer: "Anthropic",
+          url: "https://api.anthropic.com/v1/messages",
+          system: systems.get(mode.id),
+          completionParams: {
+            ...getProviderCompletionParamDefaults("ClaudeV3") as any,
+          },
+        },
       ] as Preset[]);
       State.set(`${mode.id}-activePreset`, State.get(`${mode.id}-presets`)[0]);
     });
