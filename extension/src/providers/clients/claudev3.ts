@@ -67,11 +67,6 @@ export class ClaudeV3Client {
           onmessage: async (event) => {
             if (event.event === "ping") { return; }
 
-            if (event.data === "[DONE]") {
-              console.error("Unexpected done message before stop_reason has been issued");
-              return;
-            }
-
             const completion = JSON.parse(event.data) as CompletionResponse;
 
             onProgress?.(completion);

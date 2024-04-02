@@ -22,7 +22,7 @@ export class ClaudeV3Provider implements APIProvider {
   async send(message: string = undefined): Promise<string> {
     const fmt = applyFormat("ClaudeV3", this.command);
 
-    if (message === undefined || this.messages.length == 0) {
+    if (message === undefined || !this.messages || this.messages.length == 0) {
       this.messages = [{"role": "user", "content": fmt.user}];
     } else {
       this.messages.push({"role": "user", "content": fmt.user});
