@@ -23,7 +23,7 @@ export class OpenAIProvider implements APIProvider {
    * @param message Only provided when this is a follow-up message. Otherwise, the command message is used.
    */
   async send(message: string = undefined): Promise<string> {
-    if (this.messages.length === 0) {
+    if (!this.messages.length || this.messages.length === 0) {
       this.messages.push({ role: "system", content: this.command.system });
     }
 

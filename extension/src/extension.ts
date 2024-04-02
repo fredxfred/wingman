@@ -72,22 +72,8 @@ export const createDefaultPresetsForAllModes = () => {
         },
         {
           id: generateId(),
-          name: "LM Studio",
-          provider: "OpenAI",
-          format: "OpenAI",
-          tokenizer: "OpenAI",
-          url: "http://localhost:1234/v1/chat/completions",
-          system: systems.get(mode.id),
-          completionParams: {
-            ...getProviderCompletionParamDefaults("OpenAI") as any,
-            model: null,
-            stop: null,
-          },
-        },
-        {
-          id: generateId(),
           name: "Claude v3 Sonnet",
-          provider: "Anthropic",
+          provider: "ClaudeV3",
           format: "ClaudeV3",
           tokenizer: "Anthropic",
           url: "https://api.anthropic.com/v1/messages",
