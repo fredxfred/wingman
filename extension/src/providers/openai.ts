@@ -1,7 +1,7 @@
 import { WebviewView } from "vscode";
 import { PreparedCommand } from "../dispatcher";
-import { OpenAIClient, PartialResponse } from "./clients/openai";
-import { APIProvider, ClaudeOpenAIMessage } from "./common";
+import { OpenAIClient } from "./clients/openai";
+import { APIProvider, ClaudeOpenAIMessage, PartialResponse } from "./common";
 
 export class OpenAIProvider implements APIProvider {
   webviewView: WebviewView;

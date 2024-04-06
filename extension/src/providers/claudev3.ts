@@ -1,7 +1,7 @@
 import { WebviewView } from "vscode";
 import { PreparedCommand } from "../dispatcher";
-import { ClaudeV3Client, CompletionResponse } from "./clients/claudev3";
-import { APIProvider, applyFormat, ClaudeOpenAIMessage } from "./common";
+import { ClaudeV3Client } from "./clients/claudev3";
+import { APIProvider, applyFormat, ClaudeOpenAIMessage, PartialResponse } from "./common";
 
 export class ClaudeV3Provider implements APIProvider {
   webviewView: WebviewView;
@@ -36,14 +36,14 @@ export class ClaudeV3Provider implements APIProvider {
     try {
       const response = await this.client.stream(
         this.abortController.signal,
-        (data: CompletionResponse) => {
-          this.onProgressCallback?.(data.content[0].text);
+        (data: PartialResponse) => {
+          this.onProgressCallback?.(data.text);
         },
       );
 
-      this.messages.push({"role": "assistant", "content": response.content[0].text});
+      this.messages.push({"role": "assistant", "content": response.text});
 
-      return response.content[0].text;
+      return response.text;
     } catch (error) {
       throw new Error(error);
     }

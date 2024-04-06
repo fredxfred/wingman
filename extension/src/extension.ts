@@ -74,12 +74,26 @@ export const createDefaultPresetsForAllModes = () => {
           id: generateId(),
           name: "Claude v3 Sonnet",
           provider: "ClaudeV3",
-          format: "ClaudeV3",
+          format: "Anthropic",
           tokenizer: "Anthropic",
           url: "https://api.anthropic.com/v1/messages",
           system: systems.get(mode.id),
           completionParams: {
             ...getProviderCompletionParamDefaults("ClaudeV3") as any,
+            model: "claude-3-sonnet-20240229",
+          },
+        },
+        {
+          id: generateId(),
+          name: "Claude v3 Opus",
+          provider: "ClaudeV3",
+          format: "Anthropic",
+          tokenizer: "Anthropic",
+          url: "https://api.anthropic.com/v1/messages",
+          system: systems.get(mode.id),
+          completionParams: {
+            ...getProviderCompletionParamDefaults("ClaudeV3") as any,
+            model: "claude-3-opus-20240229",
           },
         },
       ] as Preset[]);

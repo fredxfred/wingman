@@ -165,3 +165,13 @@ export type ClaudeOpenAIMessage = {
   role: string;
   content: string;
 };
+export type PartialResponse = {
+  id: string;
+  text: string;
+  role: "user" | "system" | "assistant" | "function";
+  name?: string;
+  delta?: string;
+  detail?: any;
+  parentMessageId?: string;
+  conversationId?: string;
+};

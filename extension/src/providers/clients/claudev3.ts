@@ -2,19 +2,12 @@ import { fetchEventSource } from "@ai-zen/node-fetch-event-source";
 import { PreparedCommand } from "../../dispatcher";
 import { getCurrentProviderAPIKey } from "../../utils";
 import pTimeout from "p-timeout";
+import Anthropic from '@anthropic-ai/sdk';
+import { PartialResponse } from "../common";
 
 export type ClaudeContent = {
     type: string;
     text: string;
-};
-
-export type CompletionResponse = {
-  id: string;
-  model: string;
-  role: string;
-  stop_reason: "stop_sequence" | "max_tokens" | "end_turn";
-  type: string;
-  content: Array<ClaudeContent>;
 };
 
 const ANTHROPIC_VERSION = "2023-06-01";
@@ -22,6 +15,7 @@ const ANTHROPIC_VERSION = "2023-06-01";
 export class ClaudeV3Client {
   private key: string;
   private command: PreparedCommand;
+  private client: Anthropic;
   private created: boolean = false;
 
   constructor(command: PreparedCommand) {
@@ -30,62 +24,51 @@ export class ClaudeV3Client {
 
   async create() {
     this.key = await getCurrentProviderAPIKey();
+    this.client = new Anthropic({
+      apiKey: this.key,
+    });
     this.created = true;
   }
 
-  async stream(abortSignal: AbortSignal, onProgress?: (completionResponse: CompletionResponse) => void): Promise<CompletionResponse> {
+  async stream(abortSignal: AbortSignal, onProgress?: (PartialResponse: PartialResponse) => void): Promise<PartialResponse> {
     if (!this.created) {
       await this.create();
     }
 
     const abortController = new AbortController();
-    const body = JSON.stringify(this.command.completionParams);
+    const result: PartialResponse = {
+      role: "assistant",
+      id: "1",
+      text: "",
+      delta: "",
+      detail: {},
+    };
 
-    const responseP = new Promise<CompletionResponse>((resolve, reject) => {
+    const responseP = new Promise<PartialResponse>((resolve, reject) => {
       abortSignal.addEventListener("abort", (event) => {
         abortController.abort(event);
         reject(new Error("Caller aborted completion stream."));
       });
 
-      fetchEventSource(
-        this.command.url,
-        {
-          method: "POST",
-          body,
-          signal: abortController.signal,
-          headers: {
-            "content-type": "application/json",
-            "anthropic-version": ANTHROPIC_VERSION,
-            "x-api-key": this.key,
-          },
-          onopen: async (response) => {
-            if (!response.ok) {
-              abortController.abort();
-              return reject(new Error(`Failed to open completion stream: ${response.status} ${response.statusText}`));
-            }
-          },
-          onmessage: async (event) => {
-            if (event.event === "ping") { return; }
-
-            const completion = JSON.parse(event.data) as CompletionResponse;
-
-            onProgress?.(completion);
-
-            if (completion.stop_reason !== "end_turn") {
-              abortController.abort();
-              return resolve(completion);
-            }
-          },
-          onerror: (error) => {
-            abortController.abort();
-            return reject(new Error(error));
-          },
-        },
-      );
+      // @ts-ignore
+      this.client.messages.stream(this.command.completionParams).on('text', (delta, snapshot) => {
+        result.text += delta;
+        result.delta = delta;
+        result.detail = snapshot;
+        onProgress?.(result);
+      }).on('error', (error) => {
+        abortController.abort();
+        return reject(error);
+      }).on('abort', (error) => {
+        abortController.abort();
+        return reject(error);
+      }).on('end', () => {
+        return resolve(result);
+      });
     });
 
     pTimeout(responseP, {
-      milliseconds: 10 * 60 * 1000,
+      milliseconds: 30 * 1000,
       message: "Completion stream timed out.",
     }).catch(() => {
       abortController.abort();
