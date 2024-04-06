@@ -45,6 +45,8 @@ Current placeholders:
 - `{{file}}` is replaced with the contents of the active file.
 - `{{input}}` prompts for user input and replaces this placeholder with the response.
 - `{{:param:val}}` prompt-level completion param overrides (e.g. `{{:top_k:0.1}}`).
+- `{{abs_path}}` is replaced with the absolute path of the current open file.
+- `{{fname}}` is replaced with the extension-less, path-less name of the current open file e.g. `main` or `AbstractBeanFactory`.
 
 <center>
 
