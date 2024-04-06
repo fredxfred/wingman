@@ -98,8 +98,6 @@ export async function createPrompt(prompt: PromptDefinition & { promptId: string
 
     text = text.replaceAll("{{language_instructions}}", inst);
     text = text.replaceAll("{{file}}", editor.document.getText());
-    text = text.replaceAll("{{abs_path}}", editor.document.uri.fsPath);
-    text = text.replaceAll("{{fname}}", editor.document.uri.fsPath.split(".")[0].split("/").at(-1));
     return text.replaceAll("{{selection}}", selection.selectedText).trim();
   };
 

@@ -126,12 +126,6 @@
           <li>
             <code>{"{{"}:PARAM:VAL{"}}"}</code> - Set a completion parameter for the prompt when it is dispatched, e.g. <code>{"{{"}:top_k:4{"}}"}</code>.
           </li>
-          <li>
-            <code>{"{{"}abs_path{"}}"}</code> - The absolute path of the current open file, e.g. <code>/home/user/myrepo/src/foo.py</code>.
-          </li>
-          <li>
-            <code>{"{{"}fname{"}}"}</code> - The name, without extension, of the current open file, e.g. <code>AbstractBeanFactory</code>.
-          </li>
           <!-- <li>
             <code>{"{{"}language_instructions{"}}"}</code> - A map of language ID
             to additional prompt instructions. For example,
