@@ -23,7 +23,7 @@ export class ClaudeV3Client {
   }
 
   async create() {
-    this.key = await getCurrentProviderAPIKey();
+    this.key = await getCurrentProviderAPIKey("Anthropic");
     this.client = new Anthropic({
       apiKey: this.key,
     });
