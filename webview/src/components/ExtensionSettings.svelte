@@ -12,15 +12,9 @@
 
   let providers: string[] = [];
 
-  const redundantProviders = new Set<string>(["ClaudeV3"]);
-
   onMount(() => {
     extComm.GET("providers").then((data) => {
-      data.forEach(function (provider) {
-        if (!redundantProviders.has(provider)) {
-          providers.push(provider);
-        }
-      });
+      providers = data;
     });
   });
 

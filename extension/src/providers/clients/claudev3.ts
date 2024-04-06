@@ -23,7 +23,14 @@ export class ClaudeV3Client {
   }
 
   async create() {
-    this.key = await getCurrentProviderAPIKey("Anthropic");
+    try {
+      this.key = await getCurrentProviderAPIKey();
+      if (!this.key) {
+        throw new Error("Empty ClaudeV3 API key");
+      }
+    } catch (e: unknown) {
+      this.key = await getCurrentProviderAPIKey("Anthropic");
+    }
     this.client = new Anthropic({
       apiKey: this.key,
     });
@@ -68,7 +75,7 @@ export class ClaudeV3Client {
     });
 
     pTimeout(responseP, {
-      milliseconds: 30 * 1000,
+      milliseconds: 10 * 60 * 1000,
       message: "Completion stream timed out.",
     }).catch(() => {
       abortController.abort();
