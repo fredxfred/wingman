@@ -114,6 +114,7 @@ export const providers = {
       // Source: https://web.archive.org/web/20240402111826/https://docs.anthropic.com/claude/docs/models-overview
       { name: "max_tokens", default: 4096 },
       { name: "model", default: "claude-3-sonnet-20240229" },
+      // Anthropic recommends only setting top_k and top_p for special use cases, and says temperature is usually sufficient.
       { name: "temperature", default: 0.0 },
       // { name: "stop_sequence", default: ["\\n\\nHuman:"] },
     ],

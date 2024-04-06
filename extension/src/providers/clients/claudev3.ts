@@ -5,13 +5,9 @@ import pTimeout from "p-timeout";
 import Anthropic from '@anthropic-ai/sdk';
 import { PartialResponse } from "../common";
 
-export type ClaudeContent = {
-    type: string;
-    text: string;
-};
-
-const ANTHROPIC_VERSION = "2023-06-01";
-
+// This file exists because Anthropic introduced breaking changes in their APIs between Claude's 2nd and 3rd generations.
+// This is very similar to OpenAI's Client now. They can potentially be combined, if the Anthropic SDK gets
+// replaced with general SSE logic like in clients/openai.ts
 export class ClaudeV3Client {
   private key: string;
   private command: PreparedCommand;
@@ -23,6 +19,10 @@ export class ClaudeV3Client {
   }
 
   async create() {
+    // The Svelte UI assumes that each Provider has its own API Key.
+    // Both legacy and v3 Anthropic APIs use the same keys, but differently enough to justify separate Providers.
+    // Svelte should probably be updated to not assume a 1:1 Provider:API key relationship, but in the meantime,
+    // to avoid user confusion, fall back to an Anthropic API key if a ClaudeV3 key is not present.
     try {
       this.key = await getCurrentProviderAPIKey();
       if (!this.key) {

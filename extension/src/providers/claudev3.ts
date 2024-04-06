@@ -3,6 +3,9 @@ import { PreparedCommand } from "../dispatcher";
 import { ClaudeV3Client } from "./clients/claudev3";
 import { APIProvider, applyFormat, ClaudeOpenAIMessage, PartialResponse } from "./common";
 
+// This file exists because Anthropic introduced breaking changes in their APIs between Claude's 2nd and 3rd generations.
+// This Provider, and to a lesser extent the ClaudeV3 client, are very similar to the OpenAI versions.
+// They can probably be combined.
 export class ClaudeV3Provider implements APIProvider {
   webviewView: WebviewView;
   command: PreparedCommand;
