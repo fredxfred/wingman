@@ -1,14 +1,13 @@
 {
-  "name": "ai-wingman",
-  "displayName": "Wingman",
-  "version": "2.0.27",
-  "description": "Your pair programming wingman. Supports OpenAI, Anthropic, or any LLM on your local inference server.",
+  "name": "cloud-wingman",
+  "displayName": "CloudWingman",
+  "version": "0.1.0",
+  "description": "Your cloud wingman. Supports OpenAI, Anthropic, or any LLM on your local inference server.",
   "categories": [
     "Other"
   ],
   "keywords": [
     "ai",
-    "chat",
     "gpt",
     "gpt3",
     "gpt4",
@@ -22,19 +21,31 @@
     "refactoring",
     "debugging",
     "generation",
+    "codegen",
     "copilot",
-    "wingman"
+    "wingman",
+    "mplode",
+    "mplodeai",
+    "cloud",
+    "cloudwingman",
+    "faas",
+    "lambda",
+    "gcp",
+    "aws",
+    "azure",
+    "functions",
+    "swe"
   ],
-  "homepage": "https://github.com/nvms/wingman/blob/master/README.md",
+  "homepage": "https://github.com/fredxfred/wingman/blob/main/README.md",
   "repository": {
     "type": "git",
-    "url": "https://github.com/nvms/wingman"
+    "url": "https://github.com/fredxfred/wingman"
   },
   "license": "ISC",
   "author": {
-    "name": "nvms"
+    "name": "Fred"
   },
-  "publisher": "nvms",
+  "publisher": "mplodeai",
   "type": "commonjs",
   "main": "dist/extension.umd.js",
   "browser": "dist/extension.browser.js",
@@ -100,7 +111,7 @@
     {
       "description": "PRs Welcome",
       "url": "https://img.shields.io/badge/PRs-welcome-brightgreen.svg",
-      "href": "https://github.com/nvms/wingman"
+      "href": "https://github.com/fredxfred/wingman/blob/main/README.md"
     }
   ]
 }
