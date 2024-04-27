@@ -1,7 +1,7 @@
 {
   "name": "cloud-wingman",
   "displayName": "CloudWingman",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Your cloud wingman. Supports OpenAI, Anthropic, or any LLM on your local inference server.",
   "categories": [
     "Other"
@@ -36,14 +36,14 @@
     "functions",
     "swe"
   ],
-  "homepage": "https://github.com/fredxfred/wingman/blob/main/README.md",
+  "homepage": "https://github.com/fredxfred/wingman/blob/maybefork/README.md",
   "repository": {
     "type": "git",
     "url": "https://github.com/fredxfred/wingman"
   },
   "license": "ISC",
   "author": {
-    "name": "Fred"
+    "name": "fredxfred"
   },
   "publisher": "mplodeai",
   "type": "commonjs",
@@ -54,8 +54,8 @@
     "build:watch": "tsx scripts/esbuild.ts --watch",
     "build:browser": "tsx scripts/esbuild.ts --browser",
     "package": "vsce package --no-dependencies",
-    "publish": "vsce publish --no-dependencies",
-    "release": "bumpp -c \"Release v%s\" package.json"
+    "publish": "sh scripts/publish.sh",
+    "release": "sh scripts/publish.sh"
   },
   "contributes": {
     "commands": [
