@@ -1,8 +1,8 @@
 {
   "name": "cloud-wingman",
   "displayName": "CloudWingman",
-  "version": "0.1.1",
-  "description": "Your cloud wingman. Supports OpenAI, Anthropic, or any LLM on your local inference server.",
+  "version": "0.1.2",
+  "description": "Your cloud wingman. Supports OpenAI, Anthropic, or any LLM on your local inference server. Workflows coming soon :)",
   "categories": [
     "Other"
   ],
