@@ -72,7 +72,7 @@ export const createDefaultPresetsForAllModes = () => {
         },
         {
           id: generateId(),
-          name: "Claude v3 Sonnet",
+          name: "Claude v3.5 Sonnet",
           provider: "ClaudeV3",
           format: "Anthropic",
           tokenizer: "Anthropic",
@@ -80,7 +80,7 @@ export const createDefaultPresetsForAllModes = () => {
           system: systems.get(mode.id),
           completionParams: {
             ...getProviderCompletionParamDefaults("ClaudeV3") as any,
-            model: "claude-3-sonnet-20240229",
+            model: "claude-3-5-sonnet-20240620",
           },
         },
         {
